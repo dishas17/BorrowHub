@@ -207,17 +207,3 @@ Additionally:
    - Navigate to `http://localhost:8080/BorrowHub/`.
 
 ---
-
-## 🎓 College Viva / Project Presentation Q&A
-
-**Q1: What problem does BorrowHub solve?**  
-> *A:* College students often need expensive equipment (scientific calculators, engineering drafters, lab coats, and specialty reference books) for short periods like exams or lab tests. Buying them new is costly and wasteful. BorrowHub creates a trusted campus sharing circle where students borrow from nearby hostel mates, saving money and reducing campus waste.
-
-**Q2: Why use SHA-256 for passwords instead of plain text?**  
-> *A:* Plain text passwords in a database can be exposed during a breach. Using a cryptographic one-way hash (SHA-256 in `PasswordUtil.java`) ensures even administrators cannot see students' original passwords.
-
-**Q3: How is data consistency maintained when an item is borrowed?**  
-> *A:* In `BorrowTransactionDAO.java`, database transactions use `conn.setAutoCommit(false)` to update both the `Borrow_Transactions` table and the `Items` availability status to `BORROWED` in an atomic unit. If any step fails, `conn.rollback()` prevents partial state changes.
-
-**Q4: How does the client UI match the design requirement?**  
-> *A:* The UI strictly applies the specified `#EDE9FE` light lavender canvas and `#172554` dark navy buttons with smooth transitions, responsive card grids, and interactive modal dialogs for a seamless campus user experience.
