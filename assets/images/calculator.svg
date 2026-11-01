@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#CBD5E1" />
+    </linearGradient>
+    <linearGradient id="solarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#451A03" />
+      <stop offset="50%" stop-color="#78350F" />
+      <stop offset="100%" stop-color="#451A03" />
+    </linearGradient>
+    <filter id="calcShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0F172A" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Background Desk -->
+  <rect width="100%" height="100%" fill="#F1F5F9" />
+
+  <!-- Calculator Main Shell -->
+  <g filter="url(#calcShadow)">
+    <rect x="75" y="25" width="250" height="450" rx="32" fill="url(#bodyGrad)" stroke="#334155" stroke-width="2" />
+    
+    <!-- Top Branding & Solar Cell -->
+    <text x="100" y="55" font-family="-apple-system, sans-serif" font-size="12" font-weight="900" fill="#94A3B8" letter-spacing="1">CASIO</text>
+    <text x="100" y="67" font-family="-apple-system, sans-serif" font-size="8" font-weight="700" fill="#64748B">fx-991EX ClassWiz</text>
+    
+    <!-- Solar panel -->
+    <rect x="235" y="45" width="65" height="18" rx="3" fill="url(#solarGrad)" stroke="#92400E" stroke-width="1" />
+    <line x1="256" y1="45" x2="256" y2="63" stroke="#92400E" stroke-width="0.8" opacity="0.6" />
+    <line x1="278" y1="45" x2="278" y2="63" stroke="#92400E" stroke-width="0.8" opacity="0.6" />
+
+    <!-- Natural Textbook Display Screen -->
+    <rect x="96" y="80" width="208" height="75" rx="8" fill="url(#screenGrad)" stroke="#94A3B8" stroke-width="2" />
+    <!-- Screen Pixel Text -->
+    <text x="106" y="98" font-family="monospace" font-size="9" fill="#475569">MATH  D  RAD</text>
+    <text x="106" y="122" font-family="monospace" font-size="15" font-weight="bold" fill="#0F172A">∫(x²+1)dx</text>
+    <text x="230" y="145" font-family="monospace" font-size="16" font-weight="bold" fill="#0F172A">14.538</text>
+
+    <!-- Function & Navigation Key Section -->
+    <!-- Circular Replay D-Pad in Center -->
+    <circle cx="200" cy="188" r="22" fill="#334155" stroke="#475569" stroke-width="1.5" />
+    <circle cx="200" cy="188" r="9" fill="#1E293B" />
+    <!-- D-pad arrows -->
+    <path d="M200 171 L196 177 L204 177 Z" fill="#94A3B8" />
+    <path d="M200 205 L196 199 L204 199 Z" fill="#94A3B8" />
+    <path d="M183 188 L189 184 L189 192 Z" fill="#94A3B8" />
+    <path d="M217 188 L211 184 L211 192 Z" fill="#94A3B8" />
+
+    <!-- Shift / Alpha Keys -->
+    <rect x="98" y="168" width="28" height="15" rx="4" fill="#F59E0B" />
+    <text x="103" y="179" font-family="sans-serif" font-size="7.5" font-weight="900" fill="#78350F">SHIFT</text>
+
+    <rect x="134" y="168" width="28" height="15" rx="4" fill="#EF4444" />
+    <text x="138" y="179" font-family="sans-serif" font-size="7.5" font-weight="900" fill="#FFFFFF">ALPHA</text>
+
+    <rect x="238" y="168" width="28" height="15" rx="4" fill="#334155" />
+    <text x="244" y="179" font-family="sans-serif" font-size="7.5" font-weight="700" fill="#CBD5E1">OPTN</text>
+
+    <rect x="274" y="168" width="28" height="15" rx="4" fill="#334155" />
+    <text x="281" y="179" font-family="sans-serif" font-size="7.5" font-weight="700" fill="#CBD5E1">ON</text>
+
+    <!-- Math Function Key Grid (calc, integral, x^-1, log, ln, sin, cos, tan) -->
+    <!-- Row 1 -->
+    <rect x="98" y="218" width="34" height="16" rx="4" fill="#334155" /><text x="108" y="229" font-family="sans-serif" font-size="8" fill="#E2E8F0">CALC</text>
+    <rect x="140" y="218" width="34" height="16" rx="4" fill="#334155" /><text x="154" y="229" font-family="sans-serif" font-size="8" fill="#E2E8F0">∫</text>
+    <rect x="183" y="218" width="34" height="16" rx="4" fill="#334155" /><text x="195" y="229" font-family="sans-serif" font-size="8" fill="#E2E8F0">x⁻¹</text>
+    <rect x="226" y="218" width="34" height="16" rx="4" fill="#334155" /><text x="236" y="229" font-family="sans-serif" font-size="8" fill="#E2E8F0">log</text>
+    <rect x="268" y="218" width="34" height="16" rx="4" fill="#334155" /><text x="280" y="229" font-family="sans-serif" font-size="8" fill="#E2E8F0">ln</text>
+
+    <!-- Row 2 -->
+    <rect x="98" y="240" width="34" height="16" rx="4" fill="#334155" /><text x="108" y="251" font-family="sans-serif" font-size="8" fill="#E2E8F0">■/□</text>
+    <rect x="140" y="240" width="34" height="16" rx="4" fill="#334155" /><text x="152" y="251" font-family="sans-serif" font-size="8" fill="#E2E8F0">√■</text>
+    <rect x="183" y="240" width="34" height="16" rx="4" fill="#334155" /><text x="195" y="251" font-family="sans-serif" font-size="8" fill="#E2E8F0">x²</text>
+    <rect x="226" y="240" width="34" height="16" rx="4" fill="#334155" /><text x="236" y="251" font-family="sans-serif" font-size="8" fill="#E2E8F0">x■</text>
+    <rect x="268" y="240" width="34" height="16" rx="4" fill="#334155" /><text x="277" y="251" font-family="sans-serif" font-size="8" fill="#E2E8F0">sin</text>
+
+    <!-- Row 3 -->
+    <rect x="98" y="262" width="34" height="16" rx="4" fill="#334155" /><text x="107" y="273" font-family="sans-serif" font-size="8" fill="#E2E8F0">cos</text>
+    <rect x="140" y="262" width="34" height="16" rx="4" fill="#334155" /><text x="150" y="273" font-family="sans-serif" font-size="8" fill="#E2E8F0">tan</text>
+    <rect x="183" y="262" width="34" height="16" rx="4" fill="#334155" /><text x="191" y="273" font-family="sans-serif" font-size="8" fill="#E2E8F0">STO</text>
+    <rect x="226" y="262" width="34" height="16" rx="4" fill="#334155" /><text x="235" y="273" font-family="sans-serif" font-size="8" fill="#E2E8F0">ENG</text>
+    <rect x="268" y="262" width="34" height="16" rx="4" fill="#334155" /><text x="281" y="273" font-family="sans-serif" font-size="8" fill="#E2E8F0">(</text>
+
+    <!-- Numeric Keypad (7-8-9 DEL AC, 4-5-6 * /, 1-2-3 + -, 0 . x10 Ans =) -->
+    <!-- Row 7 8 9 DEL AC -->
+    <rect x="98" y="295" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="112" y="312" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">7</text>
+    <rect x="140" y="295" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="154" y="312" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">8</text>
+    <rect x="182" y="295" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="196" y="312" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">9</text>
+    <rect x="224" y="295" width="36" height="26" rx="6" fill="#EA580C" /><text x="233" y="312" font-family="sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">DEL</text>
+    <rect x="266" y="295" width="36" height="26" rx="6" fill="#DC2626" /><text x="278" y="312" font-family="sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">AC</text>
+
+    <!-- Row 4 5 6 x / -->
+    <rect x="98" y="330" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="112" y="347" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">4</text>
+    <rect x="140" y="330" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="154" y="347" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">5</text>
+    <rect x="182" y="330" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="196" y="347" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">6</text>
+    <rect x="224" y="330" width="36" height="26" rx="6" fill="#475569" /><text x="238" y="347" font-family="sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">×</text>
+    <rect x="266" y="330" width="36" height="26" rx="6" fill="#475569" /><text x="280" y="347" font-family="sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">÷</text>
+
+    <!-- Row 1 2 3 + - -->
+    <rect x="98" y="365" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="112" y="382" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">1</text>
+    <rect x="140" y="365" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="154" y="382" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">2</text>
+    <rect x="182" y="365" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="196" y="382" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">3</text>
+    <rect x="224" y="365" width="36" height="26" rx="6" fill="#475569" /><text x="238" y="382" font-family="sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">+</text>
+    <rect x="266" y="365" width="36" height="26" rx="6" fill="#475569" /><text x="281" y="382" font-family="sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF">−</text>
+
+    <!-- Row 0 . x10^x Ans = -->
+    <rect x="98" y="400" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="112" y="417" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">0</text>
+    <rect x="140" y="400" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="156" y="417" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0F172A">·</text>
+    <rect x="182" y="400" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="190" y="416" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0F172A">×10ˣ</text>
+    <rect x="224" y="400" width="36" height="26" rx="6" fill="#F8FAFC" /><text x="234" y="416" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0F172A">Ans</text>
+    <rect x="266" y="400" width="36" height="26" rx="6" fill="#172554" stroke="#3B82F6" stroke-width="1" /><text x="279" y="417" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">=</text>
+  </g>
+</svg>

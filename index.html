@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BorrowHub - Campus Resource Sharing</title>
+    <!-- Light Lavender (#EDE9FE) Background & Dark Blue (#172554) Buttons -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+</head>
+<body>
+
+    <!-- Ambient atmosphere glow -->
+    <div class="ambient-blur-top"></div>
+    <div class="ambient-blur-bottom"></div>
+
+    <div class="app-container">
+
+        <!-- ===================================================================
+             TOP FLOATING NAVBAR (Dark Navy Pill #172554)
+             =================================================================== -->
+        <header class="top-navbar">
+            <!-- Brand -->
+            <a href="#home" class="nav-brand" data-nav-target="home">
+                <div class="brand-icon-box">📖</div>
+                <div class="brand-title">Borrow<span>Hub</span></div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav>
+                <ul class="nav-links">
+                    <li><a class="nav-link active" data-nav-target="home">Home</a></li>
+                    <li><a class="nav-link" data-nav-target="browse">Browse Items</a></li>
+                    <li id="nav-link-requests" style="display: none;">
+                        <a class="nav-link" data-nav-target="dashboard">
+                            My Requests
+                            <span id="nav-requests-badge" class="nav-badge-pill" style="display: none;">0</span>
+                        </a>
+                    </li>
+                    <!-- Admin Panel: Strictly hidden unless logged in as Admin -->
+                    <li id="nav-link-admin" style="display: none;">
+                        <a class="nav-link" data-nav-target="admin" style="color: #FCD34D;">🛡️ Admin Panel</a>
+                    </li>
+                    <li><a class="nav-link" data-nav-target="about">About Us</a></li>
+                </ul>
+            </nav>
+
+            <!-- Global Search in Navbar -->
+            <div class="nav-search">
+                <span class="nav-search-icon">🔍</span>
+                <input type="text" id="global-search-input" placeholder="Search items..." autocomplete="off">
+            </div>
+
+            <!-- User Auth / Profile Badge -->
+            <div class="nav-actions" id="nav-user-container">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+        </header>
+
+        <!-- ===================================================================
+             SCREEN 1: HOME PAGE
+             =================================================================== -->
+        <main id="screen-home" class="view-screen active">
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div>
+                    <div class="hero-tag">
+                        <span>👥</span> Campus Resource Sharing
+                    </div>
+                    <h1 class="hero-title">
+                        Borrow what you need.
+                        <span class="hero-title-highlight">Share what you have.</span>
+                    </h1>
+                    <p class="hero-description">
+                        Textbooks, calculators, lab equipment and more — 100% free to borrow within your college community. Connect with classmates, save money, and share responsibly.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="navigateTo('browse')">
+                            Browse Items <span>→</span>
+                        </button>
+                        <button class="btn-secondary" onclick="openModal('modal-add-item')">
+                            List an Item <span>+</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Card (Books, Backpack, Plant, Desk) -->
+                <div class="hero-graphic-card">
+                    <div class="hero-note-sticker">
+                        Same campus<br>Bigger possibilities ♡
+                    </div>
+                    <svg class="hero-svg-wrapper" viewBox="0 0 500 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="book1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#1E3A8A" />
+                                <stop offset="100%" stop-color="#3B82F6" />
+                            </linearGradient>
+                            <linearGradient id="book2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#7C3AED" />
+                                <stop offset="100%" stop-color="#A78BFA" />
+                            </linearGradient>
+                            <linearGradient id="book3Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669" />
+                                <stop offset="100%" stop-color="#34D399" />
+                            </linearGradient>
+                            <linearGradient id="bagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1E40AF" />
+                                <stop offset="100%" stop-color="#1D4ED8" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Desk surface shadow -->
+                        <ellipse cx="250" cy="285" rx="220" ry="22" fill="#DDD6FE" opacity="0.6" />
+
+                        <!-- Plant in white pot (Left) -->
+                        <path d="M78 200 C78 180 65 140 45 130 C65 155 75 180 78 200 Z" fill="#10B981" />
+                        <path d="M85 195 C90 160 110 135 130 140 C110 160 95 180 85 195 Z" fill="#34D399" />
+                        <path d="M82 195 C82 150 82 120 85 110 C88 135 88 170 82 195 Z" fill="#059669" />
+                        <path d="M65 200 L95 200 L90 260 L70 260 Z" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" />
+                        <ellipse cx="80" cy="200" rx="15" ry="4" fill="#E2E8F0" />
+
+                        <!-- Backpack (Center Right) -->
+                        <rect x="290" y="105" width="85" height="120" rx="42" fill="url(#bagGrad)" />
+                        <path d="M295 160 C295 145 370 145 370 160 L370 215 C370 220 295 220 295 215 Z" fill="#172554" />
+                        <path d="M315 105 C315 85 350 85 350 105" stroke="#172554" stroke-width="6" stroke-linecap="round" fill="none" />
+                        <!-- Pens in pouch -->
+                        <rect x="310" y="135" width="4" height="25" rx="2" fill="#F43F5E" transform="rotate(-10 310 135)" />
+                        <rect x="320" y="132" width="4" height="28" rx="2" fill="#F59E0B" />
+                        <rect x="330" y="136" width="4" height="24" rx="2" fill="#10B981" transform="rotate(10 330 136)" />
+                        <rect x="375" y="165" width="22" height="42" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2" />
+
+                        <!-- Stack of 3 Textbooks: Learn, Share, Grow -->
+                        <!-- Bottom Book (Grow) -->
+                        <g>
+                            <path d="M140 230 L260 230 C265 230 270 235 270 240 L270 262 C270 267 265 270 260 270 L140 270 C135 270 130 265 130 260 L130 240 C130 235 135 230 140 230 Z" fill="url(#book3Grad)" />
+                            <rect x="145" y="235" width="120" height="30" fill="#FFFFFF" rx="4" />
+                            <path d="M130 235 C135 235 140 240 140 250 C140 260 135 265 130 265 Z" fill="#047857" />
+                            <text x="180" y="254" font-family="sans-serif" font-size="12" font-weight="700" fill="#047857">Grow</text>
+                        </g>
+
+                        <!-- Middle Book (Share) -->
+                        <g>
+                            <path d="M145 195 L255 195 C260 195 265 199 265 204 L265 224 C265 229 260 232 255 232 L145 232 C140 232 135 228 135 223 L135 204 C135 199 140 195 145 195 Z" fill="url(#book2Grad)" />
+                            <rect x="150" y="200" width="110" height="27" fill="#FFFFFF" rx="3" />
+                            <path d="M135 200 C140 200 144 204 144 213 C144 222 140 227 135 227 Z" fill="#6D28D9" />
+                            <text x="182" y="218" font-family="sans-serif" font-size="12" font-weight="700" fill="#6D28D9">Share</text>
+                        </g>
+
+                        <!-- Top Book (Learn) -->
+                        <g>
+                            <path d="M150 160 L250 160 C255 160 260 164 260 169 L260 189 C260 194 255 197 250 197 L150 197 C145 197 140 193 140 188 L140 169 C140 164 145 160 150 160 Z" fill="url(#book1Grad)" />
+                            <rect x="155" y="165" width="100" height="27" fill="#FFFFFF" rx="3" />
+                            <path d="M140 165 C145 165 149 169 149 178 C149 187 145 192 140 192 Z" fill="#1E40AF" />
+                            <text x="182" y="183" font-family="sans-serif" font-size="12" font-weight="700" fill="#1E3A8A">Learn</text>
+                        </g>
+                    </svg>
+                </div>
+            </section>
+
+            <!-- ===============================================================
+                 POPULAR CATEGORIES
+                 =============================================================== -->
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title">Popular Categories</h2>
+                    <a class="section-link" onclick="navigateTo('browse')">View All →</a>
+                </div>
+                <div class="categories-grid" id="categories-container">
+                    <!-- Loaded dynamically by app.js -->
+                </div>
+            </section>
+
+            <!-- ===============================================================
+                 FEATURED ITEMS (5 Cards Row - 100% Free, No Hostel Location)
+                 =============================================================== -->
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title">Featured Items</h2>
+                    <a class="section-link" onclick="navigateTo('browse')">View All Items →</a>
+                </div>
+                <div class="items-grid" id="featured-items-container">
+                    <!-- Loaded dynamically by app.js -->
+                </div>
+            </section>
+
+            <!-- ===============================================================
+                 HOW THE PROJECT WORKS (Workflow Steps)
+                 =============================================================== -->
+            <section class="workflow-section">
+                <div class="section-header" style="margin-bottom: 0;">
+                    <div>
+                        <h2 class="section-title">How BorrowHub Works on Campus</h2>
+                        <p style="color: #64748B; font-size: 14px; margin-top: 4px;">A transparent peer-to-peer sharing workflow designed for college students.</p>
+                    </div>
+                    <span class="pill-badge" style="background: #EDE9FE; color: #5B21B6;">100% Free Sharing</span>
+                </div>
+
+                <div class="workflow-steps-grid">
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">1</div>
+                        <div class="workflow-step-icon">🔐</div>
+                        <div class="workflow-step-title">Register / Login</div>
+                        <div class="workflow-step-desc">Sign in with your verified college ID & department credentials.</div>
+                    </div>
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">2</div>
+                        <div class="workflow-step-icon">🔍</div>
+                        <div class="workflow-step-title">Browse Items</div>
+                        <div class="workflow-step-desc">Explore textbooks, calculators, and lab tools available across departments.</div>
+                    </div>
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">3</div>
+                        <div class="workflow-step-icon">📤</div>
+                        <div class="workflow-step-title">Send Request</div>
+                        <div class="workflow-step-desc">Propose a return date and note your lab exam or study purpose.</div>
+                    </div>
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">4</div>
+                        <div class="workflow-step-icon">⚖️</div>
+                        <div class="workflow-step-title">Owner Approves</div>
+                        <div class="workflow-step-desc">The item owner reviews the request and approves handover.</div>
+                    </div>
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">5</div>
+                        <div class="workflow-step-icon">🤝</div>
+                        <div class="workflow-step-title">Borrow & Use</div>
+                        <div class="workflow-step-desc">Meet on campus to collect the item for your practical test or exam.</div>
+                    </div>
+                    <div class="workflow-step-card">
+                        <div class="workflow-step-num">6</div>
+                        <div class="workflow-step-icon">🔄</div>
+                        <div class="workflow-step-title">Return & Karma</div>
+                        <div class="workflow-step-desc">Return safely on the due date and earn campus trust karma!</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Ribbon -->
+            <div class="bottom-ribbon">
+                <div class="ribbon-left">
+                    <span>📢</span>
+                    <span>Small actions. Big impact.</span>
+                    <span class="ribbon-divider">|</span>
+                    <span>Reuse • Share • Save</span>
+                </div>
+                <div class="ribbon-heart">💜</div>
+            </div>
+
+        </main>
+
+        <!-- ===================================================================
+             SCREEN 2: BROWSE ITEMS
+             =================================================================== -->
+        <main id="screen-browse" class="view-screen">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title" style="font-size: 28px;">Explore Campus Inventory</h1>
+                    <p style="color: #64748B; font-size: 14.5px; margin-top: 4px;">All resources are shared freely by fellow students across all academic branches.</p>
+                </div>
+                <button class="btn-primary" onclick="openModal('modal-add-item')">+ List an Item</button>
+            </div>
+
+            <!-- Filter Toolbar -->
+            <div class="browse-filter-bar">
+                <div class="filter-group-pills">
+                    <span style="font-size: 13px; font-weight: 700; color: #475569; margin-right: 4px;">Category:</span>
+                    <button class="filter-pill active" data-cat="All" onclick="selectCategory('All')">All</button>
+                    <button class="filter-pill" data-cat="Textbooks" onclick="selectCategory('Textbooks')">📚 Textbooks</button>
+                    <button class="filter-pill" data-cat="Calculators" onclick="selectCategory('Calculators')">🧮 Calculators</button>
+                    <button class="filter-pill" data-cat="Lab Equipment" onclick="selectCategory('Lab Equipment')">🧪 Lab Equipment</button>
+                    <button class="filter-pill" data-cat="Sports Gear" onclick="selectCategory('Sports Gear')">🏸 Sports</button>
+                    <button class="filter-pill" data-cat="Electronics" onclick="selectCategory('Electronics')">🔌 Electronics</button>
+                    <button class="filter-pill" data-cat="Others" onclick="selectCategory('Others')">✨ Others</button>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div class="search-input-box">
+                        <span>🔍</span>
+                        <input type="text" id="browse-search-input" placeholder="Search by item name..." autocomplete="off">
+                    </div>
+
+                    <select class="browse-sort-select" id="browse-sort-select">
+                        <option value="newest">Sort: Newest First</option>
+                        <option value="available">Sort: Available Now</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Availability Status Filter -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                <div style="display: flex; gap: 8px;">
+                    <button class="status-filter-pill filter-pill active" onclick="setAvailabilityFilter('All', this)">All Availability</button>
+                    <button class="status-filter-pill filter-pill" onclick="setAvailabilityFilter('AVAILABLE', this)">🟢 Available Now</button>
+                    <button class="status-filter-pill filter-pill" onclick="setAvailabilityFilter('BORROWED', this)">🟣 Currently Borrowed</button>
+                </div>
+                <div id="browse-results-count" style="font-size: 13px; font-weight: 600; color: #64748B;">Loading items...</div>
+            </div>
+
+            <!-- Browse Grid -->
+            <div class="items-grid" id="browse-items-container">
+                <!-- Loaded dynamically by app.js -->
+            </div>
+        </main>
+
+        <!-- ===================================================================
+             SCREEN 3: DEDICATED LOGIN & REGISTRATION PAGE WITH 1-CLICK DEMO ACCOUNTS
+             =================================================================== -->
+        <main id="screen-login" class="view-screen">
+            <div class="section-header" style="text-align: center; justify-content: center; margin-bottom: 24px;">
+                <div>
+                    <h1 class="section-title" style="font-size: 30px;">Welcome to BorrowHub</h1>
+                    <p style="color: #64748B; font-size: 14.5px; margin-top: 4px;">Sign in to request items, list your belongings, or manage the campus repository.</p>
+                </div>
+            </div>
+
+            <div class="login-screen-card">
+                <!-- Left Column: Instant 1-Click Demo Accounts -->
+                <div class="login-demo-sidebar">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 18px;">⚡</span>
+                            <h3 style="font-size: 17px; font-weight: 800; color: #172554;">Instant 1-Click Demo Accounts</h3>
+                        </div>
+                        <p style="font-size: 13px; color: #64748B; margin-bottom: 18px; line-height: 1.45;">
+                            Click any persona below to log in instantly without typing passwords:
+                        </p>
+
+                        <!-- Demo 1: Riya Sharma (Item Owner) -->
+                        <div class="demo-account-item" onclick="loginWithDemo(1)">
+                            <div class="demo-account-left">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" alt="Riya" class="demo-account-avatar">
+                                <div>
+                                    <div class="demo-account-name">Riya Sharma</div>
+                                    <div class="demo-account-role">👩‍🎓 Item Owner • CS 2nd Year</div>
+                                </div>
+                            </div>
+                            <span class="btn-action-blue" style="font-size: 11px;">Select →</span>
+                        </div>
+
+                        <!-- Demo 2: Aryan Patel (Borrower) -->
+                        <div class="demo-account-item" onclick="loginWithDemo(2)">
+                            <div class="demo-account-left">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Aryan" class="demo-account-avatar">
+                                <div>
+                                    <div class="demo-account-name">Aryan Patel</div>
+                                    <div class="demo-account-role">👨‍🎓 Student Borrower • IT 3rd Year</div>
+                                </div>
+                            </div>
+                            <span class="btn-action-blue" style="font-size: 11px;">Select →</span>
+                        </div>
+
+                        <!-- Demo 3: Neha Kapoor (Senior) -->
+                        <div class="demo-account-item" onclick="loginWithDemo(3)">
+                            <div class="demo-account-left">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Neha" class="demo-account-avatar">
+                                <div>
+                                    <div class="demo-account-name">Neha Kapoor</div>
+                                    <div class="demo-account-role">👩‍🎓 Senior Student • ECE 4th Year</div>
+                                </div>
+                            </div>
+                            <span class="btn-action-blue" style="font-size: 11px;">Select →</span>
+                        </div>
+
+                        <!-- Demo 4: Administrator -->
+                        <div class="demo-account-item" style="border-color: #FCD34D; background: #FFFBEB;" onclick="loginWithDemo(99)">
+                            <div class="demo-account-left">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" alt="Admin" class="demo-account-avatar">
+                                <div>
+                                    <div class="demo-account-name" style="color: #92400E;">Prof. Arvind Sharma</div>
+                                    <div class="demo-account-role" style="color: #B45309;">🛡️ Campus Administrator</div>
+                                </div>
+                            </div>
+                            <span class="btn-action-blue" style="background: #D97706; font-size: 11px;">Admin →</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 12px; color: #94A3B8; text-align: center; margin-top: 14px;">
+                        Tip: Switching to Admin unlocks the protected Admin Panel.
+                    </div>
+                </div>
+
+                <!-- Right Column: Login / Register Form -->
+                <div class="login-form-area">
+                    <div style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 2px solid #E2E8F0; padding-bottom: 8px;">
+                        <button id="login-screen-tab-btn" class="dash-tab-btn active" onclick="switchLoginScreenTab('login')">Standard Sign In</button>
+                        <button id="register-screen-tab-btn" class="dash-tab-btn" onclick="switchLoginScreenTab('register')">Register New Student</button>
+                    </div>
+
+                    <!-- Sign In Form -->
+                    <form id="login-page-form" onsubmit="handleLoginSubmit(event)">
+                        <div class="form-group">
+                            <label class="form-label">College Email or Roll Number</label>
+                            <input type="text" class="form-input" id="login-page-email" placeholder="e.g. riya.sharma@campus.edu or CS2024-042" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" id="login-page-password" value="password123" required>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                            Sign In to BorrowHub
+                        </button>
+                    </form>
+
+                    <!-- Registration Form -->
+                    <form id="register-page-form" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-input" id="reg-page-name" placeholder="e.g. Priya Deshmukh" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">College Email *</label>
+                            <input type="email" class="form-input" id="reg-page-email" placeholder="priya.d@campus.edu" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">College ID *</label>
+                                <input type="text" class="form-input" id="reg-page-college-id" placeholder="CS2026-099" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department *</label>
+                                <select class="form-select" id="reg-page-dept">
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Information Tech">Information Tech</option>
+                                    <option value="Electronics & Comm">Electronics & Comm</option>
+                                    <option value="Mechanical Engg">Mechanical Engg</option>
+                                    <option value="Biotechnology">Biotechnology</option>
+                                    <option value="Civil Engg">Civil Engg</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Year of Study</label>
+                            <select class="form-select" id="reg-page-year">
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year" selected>2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                            Complete Registration
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- ===================================================================
+             SCREEN 4: MY DASHBOARD
+             =================================================================== -->
+        <main id="screen-dashboard" class="view-screen">
+            <div class="dashboard-header-card">
+                <div class="dashboard-user-meta">
+                    <img id="dash-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150" alt="Avatar" class="dashboard-avatar-lg">
+                    <div class="dashboard-user-details">
+                        <h2 id="dash-user-name">Student Name</h2>
+                        <div class="dashboard-user-badges">
+                            <span id="dash-user-dept" class="pill-badge">Department • Year</span>
+                            <span id="dash-user-college-id" style="color: #64748B; font-size: 13px;">College ID: ---</span>
+                            <span class="pill-badge" style="background: #DCFCE7; color: #15803D;">Verified Student</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-primary" onclick="openModal('modal-add-item')">+ List an Item</button>
+                    <button class="btn-secondary" onclick="navigateTo('login')">Switch Account</button>
+                </div>
+            </div>
+
+            <!-- Stats Strip -->
+            <div class="dashboard-stats-strip">
+                <div class="stat-metric-card">
+                    <div class="stat-icon-wrap" style="background: #EDE9FE; color: #7C3AED;">📦</div>
+                    <div class="stat-info">
+                        <div class="stat-num" id="stat-lent-count">0</div>
+                        <div class="stat-lbl">Items Lent Out</div>
+                    </div>
+                </div>
+                <div class="stat-metric-card">
+                    <div class="stat-icon-wrap" style="background: #E0F2FE; color: #0284C7;">🎒</div>
+                    <div class="stat-info">
+                        <div class="stat-num" id="stat-borrowed-count">0</div>
+                        <div class="stat-lbl">Active Borrows</div>
+                    </div>
+                </div>
+                <div class="stat-metric-card">
+                    <div class="stat-icon-wrap" style="background: #FEF3C7; color: #D97706;">📬</div>
+                    <div class="stat-info">
+                        <div class="stat-num" id="stat-pending-count">0</div>
+                        <div class="stat-lbl">Pending Approvals</div>
+                    </div>
+                </div>
+                <div class="stat-metric-card">
+                    <div class="stat-icon-wrap" style="background: #DCFCE7; color: #15803D;">🌱</div>
+                    <div class="stat-info">
+                        <div class="stat-num" id="stat-karma-score">140 pts</div>
+                        <div class="stat-lbl">Community Karma</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Subtabs -->
+            <div class="dashboard-tabs-nav">
+                <button class="dash-tab-btn active" data-tab="incoming" onclick="switchDashboardTab('incoming')">
+                    📥 Incoming Requests (As Lender)
+                </button>
+                <button class="dash-tab-btn" data-tab="outgoing" onclick="switchDashboardTab('outgoing')">
+                    🎒 My Borrowed Items & Requests (As Borrower)
+                </button>
+                <button class="dash-tab-btn" data-tab="my-items" onclick="switchDashboardTab('my-items')">
+                    📦 My Listed Items
+                </button>
+                <button class="dash-tab-btn" data-tab="history" onclick="switchDashboardTab('history')">
+                    📜 Borrowing History
+                </button>
+            </div>
+
+            <div id="dashboard-tab-content">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+        </main>
+
+        <!-- ===================================================================
+             SCREEN 5: ADMIN PANEL (Protected strictly for role === 'ADMIN')
+             =================================================================== -->
+        <main id="screen-admin" class="view-screen">
+            <!-- Dynamically populated or shows Access Restricted view -->
+        </main>
+
+        <!-- ===================================================================
+             SCREEN 6: ABOUT US
+             =================================================================== -->
+        <main id="screen-about" class="view-screen">
+            <div class="workflow-section">
+                <h1 class="hero-title" style="font-size: 34px; margin-bottom: 12px;">About BorrowHub</h1>
+                <p class="hero-description" style="max-width: 800px;">
+                    BorrowHub is a college campus resource-sharing platform engineered to simplify academic life. We empower university students to lend and borrow essential belongings — including engineering drafters, scientific calculators, laboratory coats, textbooks, and sports equipment — 100% free of charge within our campus community.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;">
+                    <div style="background: #F8FAFC; padding: 22px; border-radius: 16px; border: 1px solid #E2E8F0;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🎁</div>
+                        <h3 style="font-weight: 700; color: #172554; margin-bottom: 6px;">100% Free Sharing</h3>
+                        <p style="font-size: 13.5px; color: #64748B; line-height: 1.5;">
+                            Students share academic items without any rental fees. Help each other succeed during lab exams and mid-terms.
+                        </p>
+                    </div>
+                    <div style="background: #F8FAFC; padding: 22px; border-radius: 16px; border: 1px solid #E2E8F0;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🔒</div>
+                        <h3 style="font-weight: 700; color: #172554; margin-bottom: 6px;">Trusted Campus Peers</h3>
+                        <p style="font-size: 13.5px; color: #64748B; line-height: 1.5;">
+                            Every user is verified via College ID and departmental enrollment. Handover happens safely on campus.
+                        </p>
+                    </div>
+                    <div style="background: #F8FAFC; padding: 22px; border-radius: 16px; border: 1px solid #E2E8F0;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🛡️</div>
+                        <h3 style="font-weight: 700; color: #172554; margin-bottom: 6px;">Moderated Platform</h3>
+                        <p style="font-size: 13.5px; color: #64748B; line-height: 1.5;">
+                            Campus coordinators have dedicated oversight tools to review listings and maintain institutional safety.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div><!-- End app-container -->
+
+    <!-- =======================================================================
+         MODAL 1: BORROW REQUEST MODAL
+         ======================================================================= -->
+    <div class="modal-overlay" id="modal-borrow-request">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title">Request to Borrow Item</h3>
+                <button class="modal-close-btn" onclick="closeModal('modal-borrow-request')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 14px; background: #F8FAFC; padding: 14px; border-radius: 14px; margin-bottom: 18px; border: 1px solid #E2E8F0;">
+                    <img id="borrow-modal-item-img" src="" style="width: 70px; height: 70px; border-radius: 10px; object-fit: cover;">
+                    <div>
+                        <h4 id="borrow-modal-item-title" style="font-size: 16px; font-weight: 800; color: #0F172A;">Item Title</h4>
+                        <div id="borrow-modal-item-category" style="font-size: 12.5px; color: #64748B;">Category</div>
+                        <div class="item-free-badge">✨ Free to borrow</div>
+                        <div id="borrow-modal-item-owner" style="font-size: 12px; color: #64748B; margin-top: 4px;">Owner Info</div>
+                    </div>
+                </div>
+
+                <form onsubmit="handleBorrowSubmit(event)">
+                    <input type="hidden" id="borrow-modal-item-id">
+
+                    <div class="form-group">
+                        <label class="form-label">Proposed Return Date *</label>
+                        <input type="date" class="form-input" id="borrow-return-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Purpose / Message to Owner</label>
+                        <textarea class="form-textarea" id="borrow-purpose" rows="3" placeholder="e.g. Need calculator for Friday's electrical lab exam. Will return right after."></textarea>
+                    </div>
+
+                    <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 10px 14px; font-size: 12.5px; color: #1E40AF; margin-bottom: 18px;">
+                        ℹ️ The owner will review your request. Once approved, you can collect the item on campus.
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">
+                        Send Borrow Request →
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         MODAL 2: LIST AN ITEM MODAL (No price, No hostel location)
+         ======================================================================= -->
+    <div class="modal-overlay" id="modal-add-item">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title">List an Item for Campus Sharing</h3>
+                <button class="modal-close-btn" onclick="closeModal('modal-add-item')">✕</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleAddItemSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">Item Title *</label>
+                        <input type="text" class="form-input" id="add-item-title" placeholder="e.g. Casio Scientific Calculator fx-991EX" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-select" id="add-item-category">
+                                <option value="Textbooks">📚 Textbooks</option>
+                                <option value="Calculators">🧮 Calculators</option>
+                                <option value="Lab Equipment">🧪 Lab Equipment</option>
+                                <option value="Sports Gear">🏸 Sports Gear</option>
+                                <option value="Electronics">🔌 Electronics</option>
+                                <option value="Others">✨ Others</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Condition *</label>
+                            <select class="form-select" id="add-item-condition">
+                                <option value="Brand New">Brand New</option>
+                                <option value="Like New" selected>Like New</option>
+                                <option value="Good Condition">Good Condition</option>
+                                <option value="Fair">Fair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description & Usage Guidelines *</label>
+                        <textarea class="form-textarea" id="add-item-description" rows="3" placeholder="Describe the item, edition, or any specific care instructions." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Item Image (Pick a preset or enter URL)</label>
+                        <input type="text" class="form-input" id="add-item-image" placeholder="Image URL (or select below)">
+                        <div class="preset-image-grid">
+                            <img src="assets/images/dsa-book.jpg" class="preset-img-thumb selected" title="Textbook">
+                            <img src="assets/images/calculator.svg" class="preset-img-thumb" title="Scientific Calculator">
+                            <img src="assets/images/lab-coat.jpg" class="preset-img-thumb" title="Lab Coat">
+                            <img src="assets/images/badminton.jpg" class="preset-img-thumb" title="Sports">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 8px;">
+                        Publish Free Listing
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================================
+         MODAL 3: ITEM DETAILS MODAL
+         ======================================================================= -->
+    <div class="modal-overlay" id="modal-item-details">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title">Item Overview</h3>
+                <button class="modal-close-btn" onclick="closeModal('modal-item-details')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="height: 200px; border-radius: 14px; overflow: hidden; margin-bottom: 16px;">
+                    <img id="detail-modal-img" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <div>
+                        <h2 id="detail-modal-title" style="font-size: 20px; font-weight: 800; color: #0F172A;">Item Title</h2>
+                        <span id="detail-modal-category" style="font-size: 13px; color: #64748B;">Category</span>
+                    </div>
+                    <span id="detail-modal-status" class="pill-badge status-available">Available</span>
+                </div>
+
+                <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 14px;">
+                    <span class="item-free-badge">✨ Free to borrow</span>
+                    <span style="font-size: 13px; color: #64748B;">Condition: <strong id="detail-modal-condition" style="color: #0F172A;">Like New</strong></span>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <h4 style="font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Description</h4>
+                    <p id="detail-modal-desc" style="font-size: 13.5px; color: #64748B; line-height: 1.5;"></p>
+                </div>
+
+                <!-- Owner Card -->
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #FAF5FF; border: 1px solid #DDD6FE; border-radius: 12px; margin-bottom: 18px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img id="detail-modal-owner-avatar" src="" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <div>
+                            <div id="detail-modal-owner-name" style="font-weight: 700; font-size: 13.5px;">Owner Name</div>
+                            <small id="detail-modal-owner-dept" style="color: #64748B;">Department</small>
+                        </div>
+                    </div>
+                    <span class="pill-badge" style="background: #DDD6FE; color: #5B21B6;">Verified Student</span>
+                </div>
+
+                <button id="detail-modal-borrow-btn" class="btn-primary" style="width: 100%;">
+                    Borrow Now →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/mockData.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
